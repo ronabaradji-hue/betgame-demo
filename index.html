@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b16">
+  <title>BETGAME - Mini-jeux</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080b16;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 22px 18px;
+      background: #101629;
+      border-bottom: 1px solid #273451;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 25px; font-weight: 900; color: #54e6bb; }
+    .tag { color: #9ba9c8; font-size: 12px; margin-top: 5px; }
+    .balance {
+      background: #1a2940;
+      padding: 10px;
+      border-radius: 10px;
+      color: #54e6bb;
+      font-weight: bold;
+    }
+    main { max-width: 700px; margin: auto; padding: 18px; }
+    .hero {
+      padding: 25px 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#172d43,#33205b);
+      margin-bottom: 22px;
+    }
+    h1 { font-size: 29px; margin: 0 0 10px; }
+    p { color: #b8c3dc; line-height: 1.5; }
+    .notice {
+      background: #302715;
+      color: #ffdf91;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-top: 15px;
+    }
+    h2 { font-size: 20px; margin-top: 25px; }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 12px;
+    }
+    .game {
+      background: #111a2d;
+      border: 1px solid #283653;
+      border-radius: 15px;
+      padding: 17px 12px;
+      min-height: 145px;
+    }
+    .emoji { font-size: 35px; }
+    .game h3 { margin: 10px 0 5px; }
+    .game p { font-size: 13px; margin: 5px 0 12px; }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 9px;
+      background: #54e6bb;
+      color: #07120f;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .panel {
+      margin-top: 18px;
+      background: #111a2d;
+      border: 1px solid #283653;
+      border-radius: 15px;
+      padding: 18px;
+      text-align: center;
+    }
+    .result {
+      font-size: 28px;
+      font-weight: bold;
+      color: #54e6bb;
+      margin: 18px 0;
+    }
+    footer {
+      padding: 25px 10px;
+      color: #8793ae;
+      text-align: center;
+      font-size: 12px;
+    }
+    @media(max-width:360px) {
+      .games { grid-template-columns: 1fr; }
+      h1 { font-size: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="logo">BETGAME</div>
+      <div class="tag">LE JEU COMMENCE ICI</div>
+    </div>
+    <div class="balance">Demo: 1 000 crédits</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Bienvenue sur BETGAME 🚀</h1>
+      <p>Découvre tes mini-jeux dans une expérience moderne, rapide et amusante.</p>
+      <div class="notice">
+        VERSION DÉMO : crédits fictifs, sans argent réel,
+        sans dépôt et sans retrait.
+      </div>
+    </section>
+
+    <h2>🎮 Nos mini-jeux</h2>
+    <div class="games">
+      <article class="game">
+        <div class="emoji">✈️</div>
+        <h3>BETFLIGHT</h3>
+        <p>Observe le multiplicateur monter.</p>
+        <button onclick="play('flight')">Jouer en démo</button>
+      </article>
+      <article class="game">
+        <div class="emoji">💎</div>
+        <h3>BETMINE</h3>
+        <p>Choisis une case et découvre le résultat.</p>
+        <button onclick="play('mine')">Jouer en démo</button>
+      </article>
+      <article class="game">
+        <div class="emoji">🎡</div>
+        <h3>BETSPIN</h3>
+        <p>Lance la roue de démonstration.</p>
+        <button onclick="play('spin')">Jouer en démo</button>
+      </article>
+      <article class="game">
+        <div class="emoji">🎯</div>
+        <h3>BETLUCK</h3>
+        <p>Teste ta chance avec des crédits fictifs.</p>
+        <button onclick="play('luck')">Jouer en démo</button>
+      </article>
+    </div>
+
+    <section class="panel">
+      <h2 id="gameTitle">Ton espace de jeu</h2>
+      <p id="gameText">Choisis un mini-jeu ci-dessus pour commencer.</p>
+      <div class="result" id="result">BETGAME</div>
+      <button onclick="resetDemo()">Réinitialiser la démo</button>
+    </section>
+
+    <footer>
+      BETGAME © 2026 — Prototype de démonstration.<br>
+      Aucun paiement réel n'est accepté sur cette version.
+    </footer>
+  </main>
+
+  <script>
+    let credits = 1000;
+
+    function play(game) {
+      const title = document.getElementById("gameTitle");
+      const message = document.getElementById("gameText");
+      const result = document.getElementById("result");
+
+      if (game === "flight") {
+        title.textContent = "✈️ BETFLIGHT";
+        const multiplier = (1 + Math.random() * 4).toFixed(2);
+        message.textContent =
+          "Multiplicateur de démonstration : " + multiplier + "x";
+        result.textContent = multiplier + "x";
+      } else if (game === "mine") {
+        title.textContent = "💎 BETMINE";
+        const found = Math.random() > 0.5;
+        message.textContent = found
+          ? "Tu as découvert un diamant fictif !"
+          : "Case vide ! Essaie encore.";
+        result.textContent = found ? "💎 Diamant" : "⬜ Case vide";
+      } else if (game === "spin") {
+        title.textContent = "🎡 BETSPIN";
+        const prizes = ["10", "25", "50", "100", "0"];
+        const prize = prizes[Math.floor(Math.random() * prizes.length)];
+        message.textContent = "Résultat fictif de la roue.";
+        result.textContent = "+" + prize + " crédits";
+      } else {
+        title.textContent = "🎯 BETLUCK";
+        const number = Math.floor(Math.random() * 100) + 1;
+        message.textContent = "Ton nombre aléatoire de démonstration.";
+        result.textContent = number;
+      }
+      document.querySelector(".panel").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+
+    function resetDemo() {
+      credits = 1000;
+      document.getElementById("gameTitle").textContent =
+        "Ton espace de jeu";
+      document.getElementById("gameText").textContent =
+        "Choisis un mini-jeu ci-dessus pour commencer.";
+      document.getElementById("result").textContent = "BETGAME";
+    }
+  </script>
+</body>
+          </html>
